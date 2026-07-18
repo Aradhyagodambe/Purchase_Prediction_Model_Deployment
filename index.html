@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMart Predictor</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #31333F;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1, h2, h3 { color: #31333F; }
+        hr {
+            border: 0;
+            border-top: 1px solid rgba(49, 51, 63, 0.2);
+            margin: 2rem 0;
+        }
+        .form-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .form-group { flex: 1; display: flex; flex-direction: column; }
+        label { font-size: 14px; margin-bottom: 0.5rem; }
+        select, input {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid rgba(49, 51, 63, 0.2);
+            border-radius: 0.25rem;
+            background-color: #F0F2F6;
+        }
+        .btn {
+            background-color: #ffffff;
+            border: 1px solid rgba(49, 51, 63, 0.2);
+            color: #31333F;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            border-color: #FF4B4B;
+            color: #FF4B4B;
+        }
+        .alert-success {
+            background-color: #D4EDDA;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+        }
+        .alert-warning {
+            background-color: #FFF3CD;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🛒 SmartMart Customer Insights 🛍️</h1>
+    <p>
+        Welcome to the <strong>SmartMart Purchase Predictor</strong>!<br>
+        Enter the customer's profile below to calculate their likelihood of checking out with items today.
+    </p>
+
+    <hr>
+
+    <h3>👤 Customer Profile</h3>
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender">
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" name="age" id="age" min="18" max="100" value="30">
+            </div>
+            <div class="form-group">
+                <label for="salary">Estimated Salary ($)</label>
+                <input type="number" name="salary" id="salary" min="0" max="500000" value="50000" step="5000">
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn">Predict Purchase Probability 🚀</button>
+    </form>
+
+    {% if graph_html %}
+        <div style="margin-top: 2rem;">
+            <h3>📊 Checkout Prediction</h3>
+            <!-- This renders the exact Plotly graph from Python -->
+            {{ graph_html | safe }}
+        </div>
+
+        {% if alert_type == 'success' %}
+            <div class="alert-success">
+                <strong>High Intent Customer!</strong> Recommend premium items at checkout or offer a loyalty card. 🌟
+            </div>
+        {% else %}
+            <div class="alert-warning">
+                <strong>Low Intent Customer.</strong> Consider offering a time-sensitive discount coupon to encourage conversion! 🏷️
+            </div>
+        {% endif %}
+    {% endif %}
+
+</body>
+</html>
